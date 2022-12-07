@@ -1,4 +1,11 @@
 - task: DotNetCoreCLI@2
+- task: IISWebAppManagementOnMachineGroup@0
+  inputs:
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'CreateOrUpdateWebsite'
+    WebsiteName: 'STCVAT_IGATE'
+    WebsitePhysicalPath: 'C:\Users\Bhawesh Deepak\Desktop\STCVAT_IGATEAPI'
+    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
   inputs:
     command: 'publish'
     publishWebProjects: true
