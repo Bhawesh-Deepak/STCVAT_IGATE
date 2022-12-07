@@ -10,8 +10,12 @@ using System.Threading.Tasks;
 
 namespace STCAPI.Controllers.QVD
 {
+    /// <summary>
+    /// Parse the QVD File and create json response
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+   
     public class QVDController : ControllerBase
     {
 
