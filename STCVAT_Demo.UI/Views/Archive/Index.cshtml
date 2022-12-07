@@ -1,0 +1,124 @@
+﻿@model List<STCAPI.Core.Entities.InvoiceDetails.UploadInvoiceDetails>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Archive
+
+        </h1>
+        <ol class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Home"><i class="fa fa-dashboard"></i> Home</a></li>
+
+            <li class="active"> Archive</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Archive List</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Created By</th>
+                                    <th>Created  Date</th>
+                                    <th>Invoice Name</th>
+                                    <th>Attachments</th>
+                                    <th>Upload</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.CreatedBy</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.InvoiceName</td>
+                                        <td> 
+                                        <a href="@item.Attachments" class="btn btn-primary btn-sm" download="download"  ><i class="fa fa-download"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary" onclick="GetInputVATPartial()"><i class="fa fa-upload">&nbsp;INPUT VAT FILE</i></a>
+                                            <a onclick="GetOutputVATPartial()" class="btn btn-primary btn-sm"><i class="fa fa-upload">&nbsp;OUTPUT VAT FILE</i></a>
+                                            <a onclick="GetVATReturnPartial()" class="btn btn-primary btn-sm"><i class="fa fa-upload">&nbsp;VAT RETURN  FILE</i></a>
+                                            <a onclick="GetVATTrialBalance()" class="btn btn-primary btn-sm"><i class="fa fa-upload">&nbsp;TRIAL BALANCE</i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>  
+
+
+<script type="text/javascript">
+    function GetInputVATPartial() {
+        $.get("/Archive/InputVATFilePartial", function (data) {
+            $("#modalBody").html(data);
+            $("#myModal").modal('show');
+            $("#h4TitleText").text("Input VAT File Upload !!!");
+        })
+    }
+
+    function GetOutputVATPartial() {
+        $.get("/Archive/OuputFilePartial", function (data) {
+            $("#modalBody").html(data);
+            $("#myModal").modal('show');
+            $("#h4TitleText").text("Output VAT File Upload !!!");
+        })
+    }
+
+    function GetVATReturnPartial() {
+        $.get("/Archive/ReturnVATFilePartial", function (data) {
+            $("#modalBody").html(data);
+            $("#myModal").modal('show');
+            $("#h4TitleText").text("Return VAT File Upload !!!");
+        })
+    }
+
+
+    function GetVATTrialBalance() {
+        $.get("/Archive/TrialBalanceFilePartial", function (data) {
+            $("#modalBody").html(data);
+            $("#myModal").modal('show');
+            $("#h4TitleText").text("Trial Balance File Upload !!!");
+        })
+    }
+</script>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="h4TitleText">File Upload</h4>
+            </div>
+            <div class="modal-body">
+                <div id="modalBody"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
