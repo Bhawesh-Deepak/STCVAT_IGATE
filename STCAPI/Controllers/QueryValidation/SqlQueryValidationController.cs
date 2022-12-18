@@ -90,5 +90,33 @@ namespace STCAPI.Controllers.QueryValidation
             }
 
         }
+
+        [HttpGet]
+        [Produces("application/json")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> UpdateSqlQuery(int id, bool isActive)
+        {
+            try
+            {
+                var respons = await _sqlQueryValidationRepo.GetAllEntities(x=>x.Id==id);
+                respons.TEntities.ToList().ForEach(data =>
+                {
+                    data.IsActive = isActive;
+                });
+
+                var updateResponse = await _sqlQueryValidationRepo.UpdateEntity(respons.TEntities.FirstOrDefault());
+
+                return Ok(updateResponse);
+            }
+            catch (Exception ex)
+            {
+                string exceptionMessage = ex.Message;
+
+                await ErrorLogServiceImplementation.LogError(_IErrorLogRepository, nameof(SqlQueryValidationController),
+                     nameof(GetQuery), ex.Message, ex.ToString());
+
+                return BadRequest("Issue Occured, Please contact admin Team !");
+            }
+        }
     }
 }
